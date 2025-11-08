@@ -109,7 +109,7 @@ def logout_view(request):
     return redirect('index')  # 로그아웃 후 메인 페이지로 이동
 
 
-@login_required  # 로그인이 필수인 페이지
+'''@login_required  # 로그인이 필수인 페이지
 def dimc_test_view(request):
     """DIMC 진단 폼을 보여주고 제출을 처리하는 뷰"""
     if request.method == 'POST':
@@ -126,7 +126,7 @@ def dimc_test_view(request):
     else:
         form = DimcTestForm()
 
-    return render(request, 'user/dimc_test.html', {'form': form})
+    return render(request, 'user/DIMC.html', {'form': form})'''
 
 
 @login_required
@@ -190,3 +190,12 @@ def DIMC_archive_view(request):
 
 def DIMC_view(request):
     return render(request, 'user/DIMC.html')
+
+@login_required
+def community_view(request):
+    return render(request, 'user/community.html')
+
+
+@login_required
+def courses_view(request):
+    return render(request, 'user/courses.html')

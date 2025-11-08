@@ -22,6 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
@@ -29,6 +30,7 @@ urlpatterns = [
     path('', views.index_view, name='index'),
     # user/로 시작하는 모든 url은 user.urls에서 처리
     path('user/', include('user.urls')),
+
 ]
 
 # 개발 환경에서 미디어 파일을 서빙하기 위한 설정

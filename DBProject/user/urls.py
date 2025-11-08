@@ -15,8 +15,10 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
 
     #DIMC 진단 페이지
-    path('dimc/', views.dimc_test_view, name='dimc_test'),
-    path('dimc/results/', views.dimc_results_view, name='dimc_results'),
+
+    #path('dimc/', views.dimc_test_view, name='dimc_test'),
+    #path('dimc/results/', views.dimc_results_view, name='dimc_results'),
+
 
     #마이페이지
     path('mypage/', views.mypage_view, name='mypage'),
@@ -26,6 +28,9 @@ urlpatterns = [
     #DIMC
     path('DIMC', views.DIMC_view, name='DIMC'),
     path('DIMC_archive', views.DIMC_archive_view, name='DIMC_archive'),
+
+    path('community/', views.community_view, name='community' ),
+    path('course/', views.courses_view, name='courses' ),
 
 
 ]
