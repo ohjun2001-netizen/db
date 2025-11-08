@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}DORO | LMS - 메인{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+  <!-- 상단 히어로 -->
+  <section class="hero-banner">
+    <div class="hero-inner">
+      <h1 class="hero-title">당신의 학습을 위한<br><span>DORO LMS</span></h1>
+      <p class="hero-sub">AI가 추천하는 맞춤형 강의로 더 스마트하게 성장하세요.</p>
+    </div>
+  </section>
+
+  <!-- 콘텐츠 메인 영역 -->
+  <main class="main-content container">
+    <!-- AI 강의추천 -->
+    <section class="card ai-section">
+      <h2 class="card-title">AI 강의추천</h2>
+      <div class="card-body">
+        <p>(AI 강의추천 or 무언가)</p>
+      </div>
+    </section>
+
+    <!-- 공지사항 -->
+    <section class="card notice-section">
+      <h2 class="card-title">공지사항</h2>
+      <div class="card-body">
+        <p>(공지사항)</p>
+      </div>
+    </section>
+  </main>
+{% endblock %}

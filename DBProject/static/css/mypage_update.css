@@ -1,0 +1,106 @@
+:root{
+  --line:#E5E7EB; --ink:#111827; --muted:#6B7280; --btn-purple:#5651E9;
+  --mypage-blue:rgba(75,184,251,0.9);
+  --content-top:0px;
+}
+.wrapper{ padding:0 !important; }
+
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter','Noto Sans KR',system-ui,Segoe UI,Roboto,Arial,sans-serif}
+
+#canvas{ position:relative; width:1440px; min-height:1200px; margin:0 auto; background:#fff; }
+
+/* ── 히어로(마이페이지 동일) ── */
+#bgMypage{ position:absolute; left:0; top:var(--content-top); width:1440px; height:220px; background:var(--mypage-blue); }
+#pageTitle{
+  position:absolute; left:215px; top:calc(var(--content-top) + 120px);
+  width:600px; font-size:48px; line-height:58px; font-weight:400; color:#fff; white-space:nowrap;
+}
+
+/* ── 좌측 메뉴(그대로) ── */
+#menuTitle{ position:absolute; left:215px; top:calc(var(--content-top) + 260px); font-size:36px; line-height:44px; color:#000; }
+#menuBox{ position:absolute; left:215px; top:calc(var(--content-top) + 321px); width:241px; height:716px; background:#fff; border:1px solid #CBC6C6; border-radius:4px; }
+#menuLine1{ position:absolute; left:214.99px; top:calc(var(--content-top) + 380.5px); width:241.02px; border-top:1px solid #CBC6C6; }
+#menuLine2{ position:absolute; left:215px; top:calc(var(--content-top) + 439.5px); width:241.02px; border-top:1px solid #CBC6C6; }
+#menuItem1{ position:absolute; left:238px; top:calc(var(--content-top) + 343px); font-size:20px; color:#000; text-decoration:none; }
+#menuItem2{ position:absolute; left:236px; top:calc(var(--content-top) + 399px); font-size:20px; color:#000; text-decoration:none; word-break:keep-all; }
+
+/* ── 우측 카드 ── */
+#infoBox{
+  position:absolute; left:490px; top:calc(var(--content-top) + 321px);
+  width:685px; min-height:520px; background:#fff; border:1px solid #E5E7EB; border-radius:8px;
+}
+.card-title{ position:absolute; left:20px; top:16px; font-size:18px; font-weight:600; color:#111827; }
+
+/* ── 회색 패널 ── */
+.panel{
+  position:absolute; left:20px; right:20px; top:52px;
+  background:#F3F4F6; border:1px solid #E5E7EB; border-radius:8px; padding:14px 16px;
+}
+
+/* 행: [라벨 | 값/입력 | 우 미니버튼] */
+.row{
+  display:grid; grid-template-columns: 96px 1fr 48px; align-items:center;
+  gap:12px; padding:8px 6px; border-radius:8px;
+}
+.row + .row{ margin-top:6px; }
+.lbl{ font-weight:700; color:#111827; line-height:1; }
+.main{ display:flex; align-items:center; gap:10px; min-height:28px; }
+.masked{ color:#111827; font-size:14px; }
+.inputs{ display:flex; align-items:center; gap:8px; }
+.sep{ color:#6B7280; }
+
+/* 주소/생년월일은 마스킹 위, 입력칸 아래(항상 보임) */
+.row-addr .main,
+.row-birth .main{
+  flex-direction:column; align-items:flex-start; gap:6px;
+}
+
+/* 기본 표시 정책
+   - 이메일 입력칸: 기본 숨김 (버튼/서버에서 처리)
+   - 주소/생년월일 입력칸: 항상 노출 */
+.row-email .text{ display:none; }
+.row-addr .text.wide{ display:inline-block !important; }
+.row-birth .inputs.birth{ display:flex !important; }
+
+/* 입력 크기/스타일 */
+input.text{
+  height:28px; padding:4px 10px; border:1px solid #D1D5DB; border-radius:6px;
+  font-size:14px; color:#111827; outline:none; background:#fff;
+}
+input.text:focus{ border-color:#5651E9; box-shadow:0 0 0 2px rgba(86,81,233,.15); }
+input.text.wide{ width:320px; }
+
+.inputs.phone .ph{
+  width:46px; height:28px; padding:0 6px; border:1px solid #D1D5DB; border-radius:6px;
+  text-align:center; font-size:14px; outline:none; background:#fff;
+}
+.inputs.birth .yr{ width:64px; height:28px; text-align:center; border:1px solid #D1D5DB; border-radius:6px; }
+.inputs.birth .mo,.inputs.birth .dy{ width:44px; height:28px; text-align:center; border:1px solid #D1D5DB; border-radius:6px; }
+.inputs .ph:focus,.inputs.birth input:focus{ border-color:#5651E9; box-shadow:0 0 0 2px rgba(86,81,233,.15); }
+
+/* 우측 ‘수정’ 미니버튼 */
+.btn-mini{
+  height:24px; border:1px solid #CBD5E1; background:#fff; color:#374151;
+  border-radius:6px; font-size:12px; padding:0 10px; cursor:pointer;
+}
+.btn-mini:hover{ background:#F8FAFC; }
+
+/* 저장 버튼 */
+.form-actions{ position:absolute; right:20px; bottom:14px; }
+.btn-save{
+  height:30px; padding:0 14px; border-radius:8px; border:1px solid var(--btn-purple);
+  background:var(--btn-purple); color:#fff; font-weight:700; font-size:13px; cursor:pointer;
+}
+.btn-save:hover{ filter:brightness(0.98); }
+
+/* 접근성/숨김 */
+.sr-only{
+  position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* 기존 잔여 요소 숨김 */
+.rowLbl,.rowVal,#editBtn,#withdrawBox,#withdrawTitle,#deleteBtn{ display:none !important; }
+#brandWrap,#banner,#navLinks,#greeting{ display:none !important; }
