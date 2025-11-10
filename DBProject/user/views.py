@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm  # Django 내장 로그
 from .forms import SignupForm, TermsForm
 from django.contrib.auth.decorators import login_required
 from .forms import DimcTestForm # 방금 만든 폼을 import
-from .models import DIMC # DIMC 모델을 import
+from .models import DIMC,User # DIMC 모델을 import
 from .forms import UserUpdateForm, DIMCForm
 from django.conf import settings
 
@@ -139,22 +139,43 @@ def dimc_results_view(request):
     return render(request, 'user/dimc_results.html', {'results': user_results})
 
 
-@login_required # 로그인한 사용자만 접근 가능
+# user/views.py의 현재 mypage_view 함수
+
+@login_required
 def mypage_view(request):
-    """마이페이지를 보여주는 뷰"""
-    return render(request, 'user/mypage.html')
+    """
+    '마이페이지'의 메인 화면을 보여주는 뷰.
+    - 현재 로그인한 사용자의 DIMC 기록을 최신순으로 가져와 보여줍니다.
+    """
+    # [수정 2] 모델 이름(DIMC)과 필드 이름(tested_at)을 모두 올바르게 변경했습니다.
+    archives = DIMC.objects.filter(student=request.user).order_by('-tested_at')
+
+    context = {
+        'archives': archives,
+    }
+
+    return render(request, 'user/mypage.html', context)
 
 
 @login_required
 def mypage_update_view(request):
     if request.method == 'POST':
-        # POST 요청 시, 제출된 데이터와 현재 사용자 정보(instance)로 폼을 채움
+        # [디버깅용 코드 1] 브라우저가 보낸 날것의 데이터가 무엇인지 확인합니다.
+        print("--- 브라우저가 보낸 데이터 ---")
+        print(request.POST)
+        print("--------------------------")
+
         form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            form.save()  # 변경사항 저장
-            return redirect('user:mypage')  # 마이페이지로 복귀
+            form.save()
+            return redirect('user:mypage')
+        else:
+            # [디버깅용 코드 2] 폼 유효성 검사에 실패했다면, 그 이유를 터미널에 출력합니다.
+            # <<<<<<< 여기가 모든 문제의 원인을 알려줍니다! >>>>>>>>
+            print("!!! 폼 유효성 검사 실패 !!!")
+            print(form.errors)
+
     else:
-        # GET 요청 시, 현재 사용자 정보로 채워진 폼을 보여줌
         form = UserUpdateForm(instance=request.user)
 
     return render(request, 'user/mypage_update.html', {'form': form})
@@ -199,3 +220,27 @@ def community_view(request):
 @login_required
 def courses_view(request):
     return render(request, 'user/courses.html')
+
+
+def find_id_view(request):
+    found_email = None
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        phone = request.POST.get('phone_number')
+
+        # 이름과 전화번호가 모두 입력되었는지 확인
+        if name and phone:
+            # 해당 정보와 일치하는 사용자를 찾음
+            user = User.objects.filter(name=name, phone_number=phone).first()
+            if user:
+                # 사용자를 찾았다면, 이메일을 안전한 형태로 가공
+                email_parts = user.email.split('@')
+                username = email_parts[0]
+                domain = email_parts[1]
+
+                # 이메일 앞 3자리만 보여주고 나머지는 '*' 처리
+                masked_username = username[:3] + '*' * (len(username) - 3)
+                found_email = f"{masked_username}@{domain}"
+
+    context = {'found_email': found_email}
+    return render(request, 'user/find_id.html', context)

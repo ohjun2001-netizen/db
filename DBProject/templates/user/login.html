@@ -47,10 +47,14 @@
         <button type="submit" class="btn-primary">DORO ID 로그인</button>
       </form>
 
-      <div class="login-links">
-        <a href="{% url 'user:signup' %}">회원가입</a>
-        <a href="#">ID 찾기</a>
-        <a href="#">비밀번호찾기</a>
+      <div class="find-links" style="text-align: center; margin-top: 15px;">
+        <a href="{% url 'user:signup' %}" style="margin-right: 10px;">회원가입</a>
+
+        <!-- 이 부분이 핵심입니다! -->
+        <a href="{% url 'user:find_id' %}" style="margin-right: 10px;">ID 찾기</a>
+
+        <!-- 비밀번호 찾기 링크도 미리 추가해둡니다. -->
+        <a href="{% url 'user:password_reset' %}">비밀번호찾기</a>
       </div>
     </section>
 

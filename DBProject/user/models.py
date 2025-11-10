@@ -39,9 +39,9 @@ class User(AbstractUser):
     role = models.CharField(max_length=10, choices=role_choices, default='student', verbose_name='역할')
 
     phone_number = models.CharField(max_length=15, verbose_name="전화번호", unique=True,
-                                    default='010-0000-0000', null=False, blank=False)
+                                    default='010-0000-0000', null=False, blank=True)
     address = models.CharField(max_length=100, verbose_name="주소", null=True, blank=True)
-    birthday = models.DateTimeField(null=True, blank=True, verbose_name="생년월일")
+    birthday = models.DateTimeField(null=False, blank=True, verbose_name="생년월일")
     profile_image = models.ImageField(upload_to='profile_pics/', null=True, blank=True, verbose_name="프로필 사진")
     code = models.CharField(max_length=15, verbose_name="기관 인증코드", null=True, blank=True)
 
@@ -69,6 +69,8 @@ class User(AbstractUser):
         super().save(*args, **kwargs)
 
 
+
+
 class DIMC(models.Model):
     test_id = models.AutoField(primary_key=True)
     student = models.ForeignKey(User, on_delete=models.PROTECT)  # User 모델 참조
@@ -87,3 +89,4 @@ class DIMC(models.Model):
 
     def __str__(self):
         return f"DIMC Test {self.test_id} - {self.student.name}"
+

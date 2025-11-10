@@ -16,7 +16,7 @@ class TermsForm(forms.Form):
     )
 
 
-# 회원 정보 입력 폼
+# 회원 정보 입력
 class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label="비밀번호")
     password_confirm = forms.CharField(widget=forms.PasswordInput, label="비밀번호 확인")
@@ -47,6 +47,8 @@ class SignupForm(forms.ModelForm):
                 self.add_error('password_confirm', '비밀번호가 일치하지 않습니다.')
 
         return cleaned_data
+
+
 
 class DimcTestForm(forms.ModelForm):
     class Meta:

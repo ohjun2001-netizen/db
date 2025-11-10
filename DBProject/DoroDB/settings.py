@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'user.apps.UsersConfig',
 
     "rest_framework",
 
-    "user", # 사용자, DIMC 등
     "courses", # 강의, 강의평가 등
     "core" # 메신저, 알림 등 공통 기능
 ]
@@ -137,3 +137,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = 'user:login'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

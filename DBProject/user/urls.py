@@ -1,6 +1,7 @@
 # user/urls.py
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 
 app_name = 'user'
 
@@ -31,6 +32,39 @@ urlpatterns = [
 
     path('community/', views.community_view, name='community' ),
     path('course/', views.courses_view, name='courses' ),
+
+
+
+
+    path('find_id/', views.find_id_view, name='find_id'),
+
+    # 비밀번호 재설정 절차 (Django 내장 기능 활용)
+    # 1. 비밀번호 재설정 요청 (이메일 입력)
+    path('password_reset/',
+         auth_views.PasswordResetView.as_view(
+             template_name='user/password_reset_form.html', # 우리가 만들 템플릿
+             email_template_name='user/password_reset_email.html', # 이메일 내용 템플릿
+             success_url='/user/password_reset/done/'),
+         name='password_reset'),
+
+    # 2. 재설정 이메일 발송 완료
+    path('password_reset/done/',
+         auth_views.PasswordResetDoneView.as_view(
+             template_name='user/password_reset_done.html'),
+         name='password_reset_done'),
+
+    # 3. 이메일의 링크를 클릭하여 비밀번호 재설정 (새 비밀번호 입력)
+    path('reset/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(
+             template_name='user/password_reset_confirm.html',
+             success_url='/user/password_reset/complete/'),
+         name='password_reset_confirm'),
+
+    # 4. 비밀번호 재설정 완료
+    path('reset/complete/',
+         auth_views.PasswordResetCompleteView.as_view(
+             template_name='user/password_reset_complete.html'),
+         name='password_reset_complete'),
 
 
 ]
